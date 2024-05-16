@@ -17,11 +17,11 @@ const Navbar = () => {
   const [dropdownMenu, setDropdownMenu] = useState(false);
   const [query, setQuery] = useState("");
 
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setDropdownMenu(false);
       }
     };
