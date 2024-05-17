@@ -10,7 +10,7 @@ type ProductType = {
   _id: string;
   title: string;
   description: string;
-  media: [string];
+  media: string [];
   category: string;
   collections: [string];
   tags: [string];
