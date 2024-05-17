@@ -9,19 +9,27 @@ interface ProductCardProps {
   updateSignedInUser?: (updatedUser: UserType) => void;
 }
 
-const ProductCard = ({ product, updateSignedInUser }: ProductCardProps ) => {
+const ProductCard = ({ product, updateSignedInUser }: ProductCardProps) => {
   return (
-    <Link
-      href={`/products/${product._id}`}
-      className="w-[220px] flex flex-col gap-2"
-    >
-      <Image
-        src={product.media[0]}
-        alt="product"
-        width={250}
-        height={300}
-        className="h-[250px] rounded-lg object-cover"
-      />
+    <Link href={`/products/${product._id}`} className="w-[220px] flex flex-col gap-2 group">
+      <div className="relative w-[250px] h-[300px]">
+        <Image
+          src={product.media[0]}
+          alt="product"
+          layout="fill"
+          objectFit="cover"
+          className={`rounded-lg ${product.media[1] ? "group-hover:opacity-0 transition-opacity duration-300" : ""}`}
+        />
+        {product.media[1] && (
+          <Image
+            src={product.media[1]}
+            alt="product hover"
+            layout="fill"
+            objectFit="cover"
+            className="rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          />
+        )}
+      </div>
       <div>
         <p className="text-base-bold">{product.title}</p>
         <p className="text-small-medium text-grey-2">{product.category}</p>
@@ -35,3 +43,4 @@ const ProductCard = ({ product, updateSignedInUser }: ProductCardProps ) => {
 };
 
 export default ProductCard;
+
