@@ -14,9 +14,20 @@ export const getCollections = async () => {
 
 
 export const getCollectionDetails = async (collectionId: string) => {
-  const collection = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/collections/${collectionId}`)
-  return await collection.json()
-}
+  try {
+    // Use current timestamp to ensure uniqueness and bypass caching
+    const nocache = new Date().getTime();
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/collections/${collectionId}?nocache=${nocache}`);
+    if (!response.ok) {
+      throw new Error(`Error fetching collection details: ${response.statusText}`);
+    }
+    const collection = await response.json();
+    return collection;
+  } catch (error) {
+    console.error('Fetch Error:', error);
+    throw error; // Re-throw the error or handle it as needed
+  }
+};
 
 export const getProducts = async () => {
   try {
